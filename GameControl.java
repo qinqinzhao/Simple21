@@ -2,6 +2,7 @@ package Simple21;
 
 import java.util.Scanner;
 import java.util.Random;
+import java.util.Arrays;
 
 /**
  * This is a simplified version of a common card game, "21".<p>
