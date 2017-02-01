@@ -172,38 +172,27 @@ public class GameControl {
      * @return The index of the winner, or -1 if nobody won.
      */
     int findWinningPlayer() { 
-    	int highestScore = 0;
-    	int winnerIndex = 0;
-    	
-    	// If everyone goes over 21, no one wins
-    	for (Player player: players) {
-    	    if (player.getScore() > 21) {
-    	        return -1;
-    	    }
+    	int[] totalPoints = new int[4];
+    	for (int i = 0; i < players.length; i++) {
+    		totalPoints[i] = players[i].getScore();
+    		// If everyone goes over 21, no one wins
+    		if (totalPoints[i] > 21) {
+    			totalPoints[i] = 0;
+    		}
     	}
-    	
-    	// Find highest score
-        for (Player player: players) {
-            highestScore = Math.max(highestScore, player.getScore());
-        }
-        
-        // If two or more players tie, no one wins
-        int numberOfHighestScore = 0;
-        for (Player player: players) {          
-            if (player.getScore() == highestScore) {
-                numberOfHighestScore++;
-            }
-        }
-        if (numberOfHighestScore > 1) {
-            return -1;
-        }
-        
-        // Get the index of the winner
-        for (int i = 0; i < players.length; i++) {
-          	if (players[i].getScore() == highestScore) {
-                winnerIndex = i;
-          	}
-        }       
-        return winnerIndex;
+    	// If two or more players tie, no one wins
+    	Arrays.sort(totalPoints);
+    	if (totalPoints[2] == totalPoints[3]) {
+    		return -1;
+    	}
+    	else {
+    		int index = 0;
+    		for (int i = 0; i < players.length; i++) {
+    			if (players[i].getScore() == totalPoints[3]) {
+    				index = i;
+    			}
+    		}
+    		return index;
+    	}
     }
 }
